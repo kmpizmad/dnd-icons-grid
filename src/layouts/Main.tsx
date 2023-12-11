@@ -1,4 +1,5 @@
 import { DragEvent, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import Link from 'next/link';
 import Grid from '../components/Grid';
 import Sprite from '../components/Sprite';
 import { SpriteType, SpriteValue, isSpriteValue } from '../interfaces/sprite';
@@ -69,7 +70,30 @@ export default function Main({ sprites }: IProps) {
           <Sprite key={`sprite-${key}`} url={sprite.url} name={sprite.displayName} onDragStart={onDragStart(sprite)} />
         ))}
       </div>
-      <Grid size={12} cellSize={gridCellSize} values={cellValues} onDragStart={onDragStart} onDrop={onDrop} />
+      <div>
+        <div className="flex items-center justify-center mb-6">
+          <select name="" id="">
+            {/* TODO: style select tag */}
+            <option value="Lorem ipsum">Lorem ipsum</option>
+            <option value="dolor sit amet">dolor sit amet</option>
+            <option value="consectetur adipiscing elit">consectetur adipiscing elit</option>
+            <option value="Curabitur vitae volutpat erat">Curabitur vitae volutpat erat</option>
+            <option value="In augue libero">In augue libero</option>
+            <option value="elementum malesuada porta ac">elementum malesuada porta ac</option>
+          </select>
+        </div>
+        <Grid size={12} cellSize={gridCellSize} values={cellValues} onDragStart={onDragStart} onDrop={onDrop} />
+        <div>
+          Download file at:{' '}
+          <Link
+            href="https://www.example.com"
+            target="_blank"
+            className="text-blue-700 active:text-purple-700 visited:text-purple-700 underline"
+          >
+            www.example.com
+          </Link>
+        </div>
+      </div>
       <div ref={rightBarRef} className="w-1/6 flex flex-col justify-center items-center gap-2">
         <DowloadJson data={cellValues} className="w-full" />
         <Button className="w-full" color="neutral" onClick={() => setCellValues([])}>
