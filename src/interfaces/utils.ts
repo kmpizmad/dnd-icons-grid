@@ -11,3 +11,8 @@ export type IconMap = {
     image: StaticImageData;
   };
 };
+
+export type Character = {
+  displayName: string;
+  coordinates: { x: number; y: number }[];
+};

@@ -1,5 +1,6 @@
 import { DragEvent, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import Select from 'react-select';
 import Grid from '../components/Grid';
 import Sprite from '../components/Sprite';
 import { SpriteType, SpriteValue, isSpriteValue } from '../interfaces/sprite';
@@ -10,6 +11,15 @@ interface IProps {
   sprites: SpriteType[];
 }
 
+const options = [
+  { value: 'Lorem ipsum', label: 'Lorem ipsum' },
+  { value: 'dolor sit amet', label: 'dolor sit amet' },
+  { value: 'consectetur adipiscing elit', label: 'consectetur adipiscing elit' },
+  { value: 'Curabitur vitae volutpat erat', label: 'Curabitur vitae volutpat erat' },
+  { value: 'In augue libero', label: 'In augue libero' },
+  { value: 'elementum malesuada porta ac', label: 'elementum malesuada porta ac' },
+];
+
 export default function Main({ sprites }: IProps) {
   const leftBarRef = useRef<HTMLDivElement>(null);
   const rightBarRef = useRef<HTMLDivElement>(null);
@@ -17,6 +27,7 @@ export default function Main({ sprites }: IProps) {
   const [_gridSize, setGridSize] = useState<number>(0);
   const [iconSize, setIconSize] = useState<number>(0);
   const [cellValues, setCellValues] = useState<SpriteValue[]>([]);
+  const [selection, setSelection] = useState<string>(options[0].value);
 
   // Takes up exactly the screen width
   useLayoutEffect(() => {
@@ -72,15 +83,12 @@ export default function Main({ sprites }: IProps) {
       </div>
       <div>
         <div className="flex items-center justify-center mb-6">
-          <select name="" id="">
-            {/* TODO: style select tag */}
-            <option value="Lorem ipsum">Lorem ipsum</option>
-            <option value="dolor sit amet">dolor sit amet</option>
-            <option value="consectetur adipiscing elit">consectetur adipiscing elit</option>
-            <option value="Curabitur vitae volutpat erat">Curabitur vitae volutpat erat</option>
-            <option value="In augue libero">In augue libero</option>
-            <option value="elementum malesuada porta ac">elementum malesuada porta ac</option>
-          </select>
+          <Select
+            className="w-3/4"
+            defaultValue={options[0]}
+            options={options}
+            onChange={value => setSelection(value?.value || options[0].value)}
+          />
         </div>
         <Grid size={12} cellSize={gridCellSize} values={cellValues} onDragStart={onDragStart} onDrop={onDrop} />
         <div>
@@ -95,7 +103,7 @@ export default function Main({ sprites }: IProps) {
         </div>
       </div>
       <div ref={rightBarRef} className="w-1/6 flex flex-col justify-center items-center gap-2">
-        <DowloadJson data={cellValues} className="w-full" />
+        <DowloadJson data={cellValues} className="w-full" appendWith={selection} />
         <Button className="w-full" color="neutral" onClick={() => setCellValues([])}>
           Reset
         </Button>
