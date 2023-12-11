@@ -66,7 +66,7 @@ export default function Main({ sprites }: IProps) {
         style={{ gridTemplateColumns: `repeat(${iconSize}, ${gridCellSize}px)` }}
       >
         {sprites.map((sprite, key) => (
-          <Sprite key={`sprite-${key}`} url={sprite.url} onDragStart={onDragStart(sprite)} />
+          <Sprite key={`sprite-${key}`} url={sprite.url} name={sprite.displayName} onDragStart={onDragStart(sprite)} />
         ))}
       </div>
       <Grid size={12} cellSize={gridCellSize} values={cellValues} onDragStart={onDragStart} onDrop={onDrop} />
